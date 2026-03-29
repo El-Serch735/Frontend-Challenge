@@ -1,65 +1,100 @@
-import Image from "next/image";
+'use client';
+import { useAuthStore } from '@/store/useAuthStore';
+import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Users, FileText, BookOpen, ArrowRight, Zap, Star, ShieldCheck } from 'lucide-react';
+import Link from 'next/link';
 
-export default function Home() {
+export default function HomePage() {
+  const { user } = useAuthStore();
+
+  const stats = [
+    { label: 'Usuarios Activos', value: '1,200', icon: Users, color: 'text-blue-600', bg: 'bg-blue-50' },
+    { label: 'Posts Hoy', value: '85', icon: FileText, color: 'text-green-600', bg: 'bg-green-50' },
+    { label: 'Libros Disponibles', value: '24k', icon: BookOpen, color: 'text-purple-600', bg: 'bg-purple-50' },
+  ];
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <div className="mx-auto max-w-7xl p-8 space-y-10">
+      {/* SECCIÓN BIENVENIDA */}
+      <section className="space-y-2">
+        <h1 className="text-3xl font-bold tracking-tight">¡Hola de nuevo, {user?.email.split('@')[0]}! 👋</h1>
+        <p className="text-slate-500 font-medium">Aquí tienes un resumen de lo que está pasando en la plataforma hoy.</p>
+      </section>
+
+      {/* STATS CARDS */}
+      <div className="grid grid-cols-1 gap-6 sm:grid-cols-3">
+        {stats.map((stat) => (
+          <Card key={stat.label} className="border-none shadow-sm bg-white">
+            <CardContent className="flex items-center gap-4 p-6">
+              <div className={`${stat.bg} p-3 rounded-2xl`}>
+                <stat.icon className={`h-6 w-6 ${stat.color}`} />
+              </div>
+              <div>
+                <p className="text-sm font-medium text-slate-500">{stat.label}</p>
+                <h3 className="text-2xl font-bold">{stat.value}</h3>
+              </div>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        {/* COLUMNA IZQUIERDA: ACCESOS DIRECTOS */}
+        <div className="lg:col-span-2 space-y-6">
+          <h2 className="text-xl font-bold flex items-center gap-2">
+            <Zap className="h-5 w-5 text-yellow-500 fill-yellow-500" /> Accesos Directos
+          </h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+             <Link href="/posts">
+                <Card className="group hover:bg-slate-900 transition-colors cursor-pointer">
+                  <CardContent className="p-6 flex items-center justify-between">
+                    <div className="space-y-1">
+                      <p className="font-bold group-hover:text-white transition-colors">Crear Nueva Publicación</p>
+                      <p className="text-sm text-slate-500 group-hover:text-slate-400">Comparte tus ideas con la comunidad</p>
+                    </div>
+                    <ArrowRight className="h-5 w-5 text-slate-300 group-hover:text-white transition-all group-hover:translate-x-1" />
+                  </CardContent>
+                </Card>
+             </Link>
+             <Link href="/books">
+                <Card className="group hover:bg-blue-600 transition-colors cursor-pointer">
+                  <CardContent className="p-6 flex items-center justify-between">
+                    <div className="space-y-1">
+                      <p className="font-bold group-hover:text-white transition-colors">Explorar Biblioteca</p>
+                      <p className="text-sm text-slate-500 group-hover:text-blue-200">Busca entre millones de títulos</p>
+                    </div>
+                    <ArrowRight className="h-5 w-5 text-slate-300 group-hover:text-white transition-all group-hover:translate-x-1" />
+                  </CardContent>
+                </Card>
+             </Link>
+          </div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+
+        {/* COLUMNA DERECHA: ESTADO DEL SISTEMA */}
+        <div className="space-y-6">
+          <h2 className="text-xl font-bold flex items-center gap-2">
+            <ShieldCheck className="h-5 w-5 text-green-500" /> Seguridad
+          </h2>
+          <Card className="bg-slate-50 border-none">
+            <CardContent className="p-6 space-y-4">
+              <div className="flex items-center gap-3">
+                <div className="h-2 w-2 rounded-full bg-green-500 animate-ping" />
+                <p className="text-sm font-semibold">Sistemas Operativos</p>
+              </div>
+              <p className="text-xs text-slate-500 leading-relaxed">
+                Tu sesión como <span className="font-bold">{user?.role}</span> te permite {user?.role === 'admin' ? 'gestionar todo el contenido' : 'ver usuarios y libros'}.
+              </p>
+              <div className="pt-2">
+                <div className="h-1.5 w-full bg-slate-200 rounded-full overflow-hidden">
+                   <div className="h-full bg-blue-600 w-[85%]" />
+                </div>
+                <p className="text-[10px] mt-1 text-slate-400 text-right">Integridad de datos: 85%</p>
+              </div>
+            </CardContent>
+          </Card>
         </div>
-      </main>
+      </div>
     </div>
   );
 }

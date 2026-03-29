@@ -1,36 +1,40 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# XDEVELOP Frontend Challenge - Sistema Integral de Gestión
 
-## Getting Started
+Este proyecto es una solución robusta desarrollada para el reto técnico de **XDEVELOP**, enfocada en la escalabilidad, seguridad y una experiencia de usuario (UX) moderna.
 
-First, run the development server:
+## Stack Tecnológico
+- **Framework:** Next.js 15 (App Router)
+- **Lenguaje:** TypeScript (Tipado estricto)
+- **Estado Global:** Zustand (con persistencia de sesión)
+- **Data Fetching:** TanStack Query v5 (Optimistic Updates & Cache Management)
+- **Tablas:** TanStack Table v8
+- **Estilos:** Tailwind CSS + Shadcn UI (Radix UI)
+- **Seguridad:** Middleware de Next.js + Cookies (HttpOnly para Refresh Token)
+- **Testing:** Vitest
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Características Principales
+1. **Autenticación Avanzada:** Flujo de login con persistencia en Cookies y Zustand. Protección de rutas mediante Middleware.
+2. **Gestión de Usuarios (ReqRes API):** Tabla dinámica con paginación real, búsqueda en frontend, filtrado por roles y exportación a **CSV**.
+3. **Muro de Posts (JSONPlaceholder):** Relaciones de datos (Post > Comentarios) y **Actualizaciones Optimistas** (el post aparece/se edita al instante antes de la respuesta del servidor).
+4. **Biblioteca Digital (Open Library):** Buscador con filtros por autor/año, paginación y detalle de libro mediante **Drawer**.
+5. **Sistema de Roles:** Acceso granular. Solo usuarios con rol `admin` pueden crear o editar contenido.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Archivo .env
+Para el caso de la api reqres.in se necesita una API_Key = Api_key, para poder acceder a la lista de usuarios. en este caso la página proporciono una lista corta de usuarios.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Instalación y Uso
+1. Clonar el repositorio: `git clone https://github.com/El-Serch735/Frontend-Challenge.git`
+2. Instalar dependencias: `npm install`
+3. Ejecutar en desarrollo: `npm run dev`
+4. Ejecutar pruebas unitarias: `npm test`
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Justificación Técnica (Senior Decisions)
+- **Proxy de Imágenes:** Se implementó un API Route para servir las imágenes de ReqRes y Open Library, evitando bloqueos de **CORS/CORP** y mejorando la seguridad.
+- **Optimistic UI:** Se utilizó TanStack Query para simular una respuesta inmediata en el CRUD de posts, mejorando la percepción de velocidad del usuario.
+- **Arquitectura Limpia:** Separación estricta de servicios (APIs), stores (Zustand), componentes de UI y lógica de negocio (hooks).
+- **Zustand vs Redux:** Se eligió Zustand por su ligereza y facilidad de integración con el middleware de persistencia, ideal para el manejo de sesiones en Next.js.
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Usuario de Prueba (Admin)
+- **Email:** `eve.holt@reqres.in`
+- **Password:** `cityslicka`
+*(Este usuario inicia sesión con rol de Administrador por defecto)*

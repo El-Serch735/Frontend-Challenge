@@ -28,7 +28,7 @@ Para el caso de la api reqres.in se necesita una API_Key = Api_key, para poder a
 3. Ejecutar en desarrollo: `npm run dev`
 4. Ejecutar pruebas unitarias: `npm test`
 
-## Justificación Técnica (Senior Decisions)
+## Justificación Técnica
 - **Proxy de Imágenes:** Se implementó un API Route para servir las imágenes de ReqRes y Open Library, evitando bloqueos de **CORS/CORP** y mejorando la seguridad.
 - **Optimistic UI:** Se utilizó TanStack Query para simular una respuesta inmediata en el CRUD de posts, mejorando la percepción de velocidad del usuario.
 - **Arquitectura Limpia:** Separación estricta de servicios (APIs), stores (Zustand), componentes de UI y lógica de negocio (hooks).
